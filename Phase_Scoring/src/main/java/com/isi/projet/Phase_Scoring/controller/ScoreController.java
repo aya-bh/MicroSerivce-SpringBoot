@@ -47,7 +47,7 @@ public class ScoreController {
 
 
     @RequestMapping(value = "/scores/getCredit/{id}/{idscore}", method = RequestMethod.GET)
-    public Score getAmountChanged(@PathVariable(value = "idscore") Long idscore, @PathVariable(value = "id") Long id ) throws IOException, ParseException {
+    public Score getScoreChanged(@PathVariable(value = "idscore") Long idscore, @PathVariable(value = "id") Long id ) throws IOException, ParseException {
         URL url = new URL("http://localhost:8080/api/getCredit/"+id);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");

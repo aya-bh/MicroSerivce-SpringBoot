@@ -11,22 +11,19 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class Credit {
+public class DemandeCredit {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "refDossier")
+    @Column(name = "iddemandecredit")
     private Long id;
+    private float montant_demande;
+    private int duree_demande;
 
     @OneToOne
-    @JoinColumn(name = "Demande_credit")
-    private DemandeCredit demandeCredit;
-    @OneToOne
-    @JoinColumn(name = "bareme_id")
-    private Bareme bareme;
+    @JoinColumn(name = "client_id")
+    private Client client;
 
-    private float mensualite;
 
-    private float interet;
 
 
 }

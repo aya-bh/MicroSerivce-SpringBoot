@@ -46,7 +46,7 @@ public class DecisionController {
 
 
     @RequestMapping(value = "/decisions/getScore/{idscore}/{iddec}", method = RequestMethod.GET)
-    public Decision getAmountChanged(@PathVariable(value = "idscore") Long idscore, @PathVariable(value = "iddec") Long iddec ) throws IOException, ParseException, ParseException {
+    public Decision getDecisionChanged(@PathVariable(value = "idscore") Long idscore, @PathVariable(value = "iddec") Long iddec ) throws IOException, ParseException, ParseException {
         URL url = new URL("http://localhost:8081/api/getScore/"+idscore);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");

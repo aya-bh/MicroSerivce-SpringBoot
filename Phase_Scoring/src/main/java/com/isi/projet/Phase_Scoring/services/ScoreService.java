@@ -61,10 +61,11 @@ public class ScoreService {
             }
         }
 
-        //Si salaire > 2000 ➔ Score = score + 20
+
         if(trouve) {
             score = 0;
         }else {
+            //Si salaire > 2000 ➔ Score = score + 20
             if ((double) client.get("salaire_mensuel") >= 2000) {
                 score = score + 20;
             }
@@ -77,7 +78,7 @@ public class ScoreService {
                 score = score + 30;
             }
             //Si Mensualité / salaire < 0.45 ➔ Score = score + 50
-            if ((double) json.get("mensualite") / (double) client.get("salaire_mensuel") < 045) {
+            if ((double) json.get("mensualite") / (double) client.get("salaire_mensuel") < 0.45) {
                 score = score + 50;
             }
         }

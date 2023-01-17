@@ -1,6 +1,4 @@
-package com.isi.projet.Phase_simulation_demande.model;
-
-import jakarta.persistence.*;
+package com.isi.projet.Phase_simulation_demande.model;import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
