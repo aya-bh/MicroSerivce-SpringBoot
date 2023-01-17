@@ -22,11 +22,13 @@ public class Credit {
     private DemandeCredit demandeCredit;
     @OneToOne
     @JoinColumn(name = "bareme_id")
-    private Bareme bareme;
+    private Bareme refbareme;
 
     private float mensualite;
 
     private float interet;
 
+    @Column(name = "client_cin")
+    private String refclient;
 
 }

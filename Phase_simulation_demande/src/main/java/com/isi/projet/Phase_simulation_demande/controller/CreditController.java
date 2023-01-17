@@ -1,5 +1,6 @@
 package com.isi.projet.Phase_simulation_demande.controller;
 
+import com.isi.projet.Phase_simulation_demande.model.Bareme;
 import com.isi.projet.Phase_simulation_demande.model.Credit;
 import com.isi.projet.Phase_simulation_demande.services.CreditService;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class CreditController {
     public CreditService creditService;
 
     @RequestMapping(value="/credits", method = RequestMethod.POST)
-    public Credit createCredit (@RequestBody Credit c) {
-        return creditService.createCredit(c);
+    public Credit createCredit (@RequestBody Long iddemande, Bareme br) {
+        return creditService.createCredit(iddemande,br);
     }
 
     @RequestMapping(value="/credits", method=RequestMethod.GET)

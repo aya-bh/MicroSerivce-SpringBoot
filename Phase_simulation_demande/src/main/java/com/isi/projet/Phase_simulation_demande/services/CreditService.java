@@ -2,13 +2,14 @@ package com.isi.projet.Phase_simulation_demande.services;
 
 import com.isi.projet.Phase_simulation_demande.model.Bareme;
 import com.isi.projet.Phase_simulation_demande.model.Credit;
+import com.isi.projet.Phase_simulation_demande.model.DemandeCredit;
 import com.isi.projet.Phase_simulation_demande.repository.BaremeRepository;
 import com.isi.projet.Phase_simulation_demande.repository.CreditRepository;
+import com.isi.projet.Phase_simulation_demande.repository.DemandeCreditRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -17,23 +18,25 @@ public class CreditService {
     @Autowired
     public CreditRepository creditRepository;
 
+    @Autowired
+    public DemandeCreditRepository demandeCreditRepository;
 
-    public void setterCredit(Credit c, Credit credit){
-        c.setId(credit.getId());
-        c.setDuree_credit(credit.getDuree_credit());
-        c.setMontant_credit(credit.getMontant_credit());
-        c.setClient(credit.getClient());
-        c.setBareme(lookForBareme(credit.getDuree_credit(),credit.getMontant_credit()));
-        float interet = c.getMontant_credit() * c.getBareme().getTaux_nominal();
-        c.setInteret(interet);
-        float mensualite = (c.getMontant_credit()+c.getInteret())/c.getDuree_credit();
-        c.setMensualite(mensualite);
-        //System.out.println("Credit ajouté : "+c);
+    @Autowired
+    public BaremeRepository baremeRepository;
 
-    }
-    public Credit createCredit (Credit credit) {
+
+
+    public Credit createCredit (Long iddemande, Bareme br) {
         Credit c = new Credit();
-        setterCredit(c,credit);
+        //c.setId(null);
+        DemandeCredit dm = demandeCreditRepository.findById(iddemande).get();
+        c.setDemandeCredit(dm);
+        c.setRefclient(dm.getClient().getCin());
+        c.setRefbareme(br);
+        float interet = c.getDemandeCredit().getMontant_demande() * c.getRefbareme().getTaux_nominal();
+        c.setInteret(interet);
+        float mensualite = (c.getDemandeCredit().getMontant_demande()+c.getInteret())/c.getDemandeCredit().getDuree_demande();
+        c.setMensualite(mensualite);
         return creditRepository.save(c);
     }
 
@@ -49,7 +52,7 @@ public class CreditService {
 
     public Credit updateCredit(Long creditId, Credit credit) {
         Credit c = creditRepository.findById(creditId).get();
-        setterCredit(c,credit);
+        c = credit;
         return creditRepository.save(c);
     }
 

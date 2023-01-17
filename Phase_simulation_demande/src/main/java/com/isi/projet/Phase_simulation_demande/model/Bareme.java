@@ -20,4 +20,5 @@ public class Bareme {
     private int duree_maximal;
     private float montant_minimal;
     private float montant_maximal;
+
 }

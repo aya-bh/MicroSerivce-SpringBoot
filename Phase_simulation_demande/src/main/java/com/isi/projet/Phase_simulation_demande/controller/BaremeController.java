@@ -39,5 +39,11 @@ public class BaremeController {
         baremeService.deleteBareme(id);
     }
 
+    @RequestMapping(value="/lookforbaremes/{iddemande}", method=RequestMethod.DELETE)
+    public void lookforbareme (@PathVariable(value = "iddemande") Long id) {
+
+        baremeService.lookForBareme(id);
+    }
+
 
 }
