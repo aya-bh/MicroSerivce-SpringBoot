@@ -46,9 +46,9 @@ public class ScoreController {
     }
 
 
-    @RequestMapping(value = "/scores/getCredit/{id}/{idscore}", method = RequestMethod.GET)
-    public Score getScoreChanged(@PathVariable(value = "idscore") Long idscore, @PathVariable(value = "id") Long id ) throws IOException, ParseException {
-        URL url = new URL("http://localhost:8080/api/getCredit/"+id);
+    @RequestMapping(value = "/scores/calcuScore/{iddossier}", method = RequestMethod.GET)
+    public Score getScoreChanged( @PathVariable(value = "iddossier") Long iddossier ) throws IOException, ParseException {
+        URL url = new URL("http://localhost:8083/api/getCredit/"+iddossier);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
         int status = con.getResponseCode();
@@ -59,9 +59,34 @@ public class ScoreController {
         System.out.println("input  : "+inputLine);
         JSONParser parser = new JSONParser();
         JSONObject json = (JSONObject) parser.parse(inputLine);
-        return scoreService.changeScore(idscore,json);
+        return scoreService.changeScore(json);
 
     }
+
+
+    @RequestMapping(value = "/score/scorenull/{iddossier}", method = RequestMethod.GET)
+    public Score calculScoreNull( @PathVariable(value = "iddossier") Long iddossier ) throws IOException, ParseException {
+        URL url = new URL("http://localhost:8083/api/getCredit/"+iddossier);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+        int status = con.getResponseCode();
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuffer content = new StringBuffer();
+        inputLine = in.readLine();
+        System.out.println("input  : "+inputLine);
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(inputLine);
+        return scoreService.scoreNull(json);
+
+    }
+
+    @RequestMapping(value ="/evaluationscore/{idscore}", method=RequestMethod.PUT)
+    public Score updateScore (@PathVariable(value = "idscore") Long idscore)
+    {
+        return scoreService.evaluationScore(idscore);
+    }
+
 
     @RequestMapping(value="/getScore/{idscore}", method=RequestMethod.GET)
     public Score getScore(@PathVariable(value = "idscore") Long id){

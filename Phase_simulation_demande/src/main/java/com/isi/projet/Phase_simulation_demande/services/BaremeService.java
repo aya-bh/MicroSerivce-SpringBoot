@@ -58,17 +58,20 @@ public class BaremeService {
                     preselect.add(preselect.size(),br);
                 }
             }
+
         });
-        //System.out.println("preselect : "+preselect);
+        System.out.println("preselect : "+preselect);
         Bareme min = new Bareme();
-        min= preselect.get(0);
-        for(Bareme br : preselect){
-            if(br.getTaux_nominal() <= min.getTaux_nominal()){
-                min = br;
+        if(preselect.size()!=0){
+            min= preselect.get(0);
+            for(Bareme br : preselect){
+                if(br.getTaux_nominal() <= min.getTaux_nominal()){
+                    min = br;
+                }
             }
         }
 
-        //System.out.println("Bareme selectionné : "+bar);
+        System.out.println("Bareme selectionné : "+min);
         return min;
     }
 

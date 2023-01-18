@@ -2,9 +2,10 @@ package com.isi.projet.Phase_simulation_demande.model;
 
 import com.isi.projet.Phase_simulation_demande.enums.TypeContrat;
 import jakarta.persistence.*;
-import lombok.*;
-
-import java.util.Date;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
@@ -27,7 +28,7 @@ public class Client {
     @Enumerated(EnumType.STRING)
     private TypeContrat type_contrat;
 
-    private Date date_naissance;
+    private String date_naissance;
 
 
 }

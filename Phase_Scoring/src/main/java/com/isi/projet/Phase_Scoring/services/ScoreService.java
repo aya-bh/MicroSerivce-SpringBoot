@@ -48,23 +48,20 @@ public class ScoreService {
 
         return scoreRepository.save(c);
     }
-
-    public Score changeScore(Long id, JSONObject json) throws ParseException {
+    public Score scoreNull(JSONObject dossiercredit)  {
         int score = 0;
-        Boolean trouve = false;
-        List<BlacklisteBCT> bct  = bctRepository.findAll();
+        Score scr = new Score();
+        scr.setDossier(dossiercredit.get("id").toString());
+        scr.setCalc_score(score);
+        return scoreRepository.save(scr);
+
+    }
+    public Score changeScore(JSONObject dossiercredit) throws ParseException  {
+        int score = 0;
         JSONParser parser = new JSONParser();
-        JSONObject client = (JSONObject) parser.parse(json.get("client").toString());
-        for (BlacklisteBCT liste : bct){
-            if(liste.getCin().equals(client.get("cin"))){
-                trouve= true;
-            }
-        }
+        JSONObject demandeCredit = (JSONObject) parser.parse(dossiercredit.get("demandeCredit").toString());
+        JSONObject client = (JSONObject) parser.parse(demandeCredit.get("client").toString());
 
-
-        if(trouve) {
-            score = 0;
-        }else {
             //Si salaire > 2000 ➔ Score = score + 20
             if ((double) client.get("salaire_mensuel") >= 2000) {
                 score = score + 20;
@@ -78,21 +75,32 @@ public class ScoreService {
                 score = score + 30;
             }
             //Si Mensualité / salaire < 0.45 ➔ Score = score + 50
-            if ((double) json.get("mensualite") / (double) client.get("salaire_mensuel") < 0.45) {
+            if ((double) dossiercredit.get("mensualite") / (double) client.get("salaire_mensuel") < 0.45) {
                 score = score + 50;
             }
-        }
-        Score scr = scoreRepository.findById(id).get();
-        scr.setDossier(json.get("id").toString());
+
+        Score scr = new Score();
+        scr.setDossier(dossiercredit.get("id").toString());
         scr.setCalc_score(score);
-        if(score < 50){
+        /*if(score < 50){
+            scr.setEval_score(Evaluation.ROUGE);
+        }
+        else {
+            scr.setEval_score(Evaluation.VERT);
+        }*/
+        return scoreRepository.save(scr);
+
+    }
+
+    public Score evaluationScore(Long idscore){
+        Score scr =scoreRepository.findById(idscore).get();
+        if(scr.getCalc_score() < 50){
             scr.setEval_score(Evaluation.ROUGE);
         }
         else {
             scr.setEval_score(Evaluation.VERT);
         }
         return scoreRepository.save(scr);
-
     }
 
     public Score sendScore(Long id) {

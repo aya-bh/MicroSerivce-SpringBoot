@@ -9,7 +9,7 @@ public class PhaseSimulationDemandeProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PhaseSimulationDemandeProjectApplication.class, args);
 	}
-/*
+	/*
 	@Bean
 	CommandLineRunner start(BaremeRepository baremeRepository){
 		return args -> {
@@ -18,11 +18,10 @@ public class PhaseSimulationDemandeProjectApplication {
 			baremeRepository.save(new Bareme(null,2.5F,10,12,120, 400));
 			baremeRepository.save(new Bareme(null,0.8F,2,4,500, 1000));
 			baremeRepository.save(new Bareme(null,7.0F,1,5,7000, 2500));
+			baremeRepository.save(new Bareme(null,7.0F,1,5,7000, 2500));
+			baremeRepository.save(new Bareme(null,7.0F,1,5,7000, 2500));
 
-			baremeRepository.findAll().forEach(cp-> {
-				System.out.println(cp.getCin());
-				System.out.println(cp.getSalaire_mensuel());
-			});
+
 		};
 	}*/
 }

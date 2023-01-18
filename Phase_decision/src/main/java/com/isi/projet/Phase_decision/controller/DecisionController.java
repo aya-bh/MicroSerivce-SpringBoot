@@ -45,20 +45,36 @@ public class DecisionController {
     }
 
 
-    @RequestMapping(value = "/decisions/getScore/{idscore}/{iddec}", method = RequestMethod.GET)
-    public Decision getDecisionChanged(@PathVariable(value = "idscore") Long idscore, @PathVariable(value = "iddec") Long iddec ) throws IOException, ParseException, ParseException {
+    @RequestMapping(value = "/decisions/getScore/{idscore}/{iddossier}", method = RequestMethod.GET)
+    public Decision getDecisionChanged(@PathVariable(value = "idscore") Long idscore,@PathVariable(value = "iddossier") Long iddossier ) throws IOException, ParseException, ParseException {
         URL url = new URL("http://localhost:8081/api/getScore/"+idscore);
+        URL urldemandedossier = new URL("http://localhost:8083/api/getCredit/"+iddossier);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        HttpURLConnection con1 = (HttpURLConnection) urldemandedossier.openConnection();
+
         con.setRequestMethod("GET");
+        con1.setRequestMethod("GET");
+
         int status = con.getResponseCode();
+        int status1 = con1.getResponseCode();
+
         BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        BufferedReader in1 = new BufferedReader(new InputStreamReader(con1.getInputStream()));
+
         String inputLine;
+        String demandecredit;
+
         StringBuffer content = new StringBuffer();
+        StringBuffer content1 = new StringBuffer();
+
         inputLine = in.readLine();
-        System.out.println("input  : "+inputLine);
+        demandecredit = in1.readLine();
+
         JSONParser parser = new JSONParser();
-        JSONObject json = (JSONObject) parser.parse(inputLine);
-        return decisionService.addDecision(iddec,json);
+        JSONObject score = (JSONObject) parser.parse(inputLine);
+        JSONObject demande = (JSONObject) parser.parse(demandecredit);
+
+        return decisionService.addDecision(score,demande);
 
     }
 

@@ -26,10 +26,11 @@ public class CreditService {
 
 
 
-    public Credit createCredit (Long iddemande, Bareme br) {
+    public Credit createCredit (Long iddemande, Long refbr) {
         Credit c = new Credit();
         //c.setId(null);
         DemandeCredit dm = demandeCreditRepository.findById(iddemande).get();
+        Bareme br = baremeRepository.findById(refbr).get();
         c.setDemandeCredit(dm);
         c.setRefclient(dm.getClient().getCin());
         c.setRefbareme(br);

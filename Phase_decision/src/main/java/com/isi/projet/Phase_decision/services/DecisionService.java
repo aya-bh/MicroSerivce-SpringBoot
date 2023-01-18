@@ -5,6 +5,8 @@ import com.isi.projet.Phase_decision.enums.Statut;
 import com.isi.projet.Phase_decision.model.Decision;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
+import net.minidev.json.parser.JSONParser;
+import net.minidev.json.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,11 +44,13 @@ public class DecisionService {
         return decisionRepository.save(c);
     }
 
-    public Decision addDecision(Long id, JSONObject json){
-        Decision decision = decisionRepository.findById(id).get();
+    public Decision addDecision(JSONObject score,JSONObject demande) throws ParseException {
+        Decision decision = new Decision();
         decision.setDate_decision(new Date());
-        decision.setRef_demande(json.get("dossier").toString());
-        if(json.get("eval_score").equals("ROUGE")){
+        JSONParser parser = new JSONParser();
+        JSONObject dossier = (JSONObject) parser.parse(demande.get("demandeCredit").toString());
+        decision.setRef_demande(dossier.get("id").toString());
+        if(score.get("eval_score").equals("ROUGE")){
             decision.setStatut(Statut.REFUS);
         }
         else {
