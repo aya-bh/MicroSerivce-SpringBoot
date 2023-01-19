@@ -44,12 +44,12 @@ public class DecisionService {
         return decisionRepository.save(c);
     }
 
-    public Decision addDecision(JSONObject score,JSONObject demande) throws ParseException {
+    public Decision addDecision(JSONObject score,JSONObject dossier) throws ParseException {
         Decision decision = new Decision();
         decision.setDate_decision(new Date());
         JSONParser parser = new JSONParser();
-        JSONObject dossier = (JSONObject) parser.parse(demande.get("demandeCredit").toString());
-        decision.setRef_demande(dossier.get("id").toString());
+        JSONObject demande = (JSONObject) parser.parse(dossier.get("demandeCredit").toString());
+        decision.setRef_demande(demande.get("id").toString());
         if(score.get("eval_score").equals("ROUGE")){
             decision.setStatut(Statut.REFUS);
         }

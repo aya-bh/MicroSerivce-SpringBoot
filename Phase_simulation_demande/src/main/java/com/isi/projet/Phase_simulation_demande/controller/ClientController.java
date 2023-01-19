@@ -21,6 +21,25 @@ public class ClientController {
         return clientService.createClient(c).getId();
     }
 
+
+    @RequestMapping(value ="/getclientcin/{cin}", method=RequestMethod.GET)
+    public Client findClient (@PathVariable(value = "cin") String cin)
+    {
+        System.out.println("client : "+clientService.getclientbyCIN(cin));
+        System.out.println("client cin : "+cin);
+        return clientService.getclientbyCIN(cin);
+
+    }
+
+    @RequestMapping(value ="/verifClient/{cin}", method=RequestMethod.GET)
+    public boolean verifClient (@PathVariable(value = "id") String cin)
+    {
+        System.out.println("client : "+clientService.getclientbyCIN(cin));
+        System.out.println("client cin : "+cin);
+        return clientService.getclientbyCIN(cin) != null;
+
+    }
+
     @RequestMapping(value="/clients", method=RequestMethod.GET)
     public List<Client> readClient() {
         return clientService.getClient();
@@ -40,26 +59,12 @@ public class ClientController {
         return clientService.getclientbyCIN(cin) != null;
     }
 
+
+
     @RequestMapping(value="/clients/{id}", method=RequestMethod.DELETE)
     public void deleteClient (@PathVariable(value = "id") Long id) {
         clientService.deleteClient(id);
     }
 
-    @RequestMapping(value ="/getclientcin/{cin}", method=RequestMethod.GET)
-    public Client findClient (@PathVariable(value = "cin") String cin)
-    {
-        System.out.println("client : "+clientService.getclientbyCIN(cin));
-        System.out.println("client cin : "+cin);
-        return clientService.getclientbyCIN(cin);
 
-    }
-
-    @RequestMapping(value ="/verifClient/{cin}", method=RequestMethod.GET)
-    public boolean verifClient (@PathVariable(value = "id") String cin)
-    {
-        System.out.println("client : "+clientService.getclientbyCIN(cin));
-        System.out.println("client cin : "+cin);
-        return clientService.getclientbyCIN(cin) != null;
-
-    }
 }

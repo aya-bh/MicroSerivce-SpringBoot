@@ -21,7 +21,11 @@ public class BaremeController {
         return baremeService.createBareme(c);
     }
 
+    @RequestMapping(value="/lookforbaremes/{iddemande}", method=RequestMethod.GET)
+    public Bareme lookforbareme (@PathVariable(value = "iddemande") Long id) {
 
+        return baremeService.lookForBareme(id);
+    }
     @RequestMapping(value="/baremes", method=RequestMethod.GET)
     public List<Bareme> readBareme() {
         return baremeService.getBareme();
@@ -39,11 +43,7 @@ public class BaremeController {
         baremeService.deleteBareme(id);
     }
 
-    @RequestMapping(value="/lookforbaremes/{iddemande}", method=RequestMethod.GET)
-    public Bareme lookforbareme (@PathVariable(value = "iddemande") Long id) {
 
-       return baremeService.lookForBareme(id);
-    }
 
 
 }
